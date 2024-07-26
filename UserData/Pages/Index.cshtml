@@ -1,0 +1,88 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container mx-auto p-4 text-center">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">User Role Management</h1>
+
+    <!-- Add User Section -->
+    <div class="mb-6">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-700">Add New User</h2>
+        <div class="flex justify-center items-center space-x-2">
+            <input type="text" id="new-user-name" placeholder="Enter user name"
+                   class="px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
+                   data-bind="value: newUserName">
+            <button data-bind="click: addUser"
+                    class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+                Add User
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Role Section -->
+    <div class="mb-6">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-700">Add New Role</h2>
+        <div class="flex justify-center items-center space-x-2">
+            <input type="text" id="new-role-name" placeholder="Enter role name"
+                   class="px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
+                   data-bind="value: newRoleName">
+            <button data-bind="click: addRole"
+                    class="px-4 py-2 bg-purple-500 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75">
+                Add Role
+            </button>
+        </div>
+    </div>
+
+    <!-- Existing User Role Management Section -->
+    <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 mb-6">
+        <div class="flex flex-col">
+            <label for="user-select" class="mb-2 font-semibold text-gray-700">Select User:</label>
+            <select id="user-select"
+                    class="form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    data-bind="options: dataModel.users,
+                               optionsText: 'name',
+                               optionsValue: 'id',
+                               optionsCaption: '--Select a user--',
+                               value: dataModel.selectedUser"></select>
+        </div>
+        <div class="flex flex-col">
+            <label for="role-select" class="mb-2 font-semibold text-gray-700">Select Role:</label>
+            <select id="role-select"
+                    class="form-select rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    data-bind="options: dataModel.roles,
+                               optionsText: 'name',
+                               optionsValue: 'id',
+                               optionsCaption: '--Select a role--',
+                               value: dataModel.selectedRole"></select>
+        </div>
+    </div>
+    <button data-bind="click: addUserRole, enable: canAddUserRole"
+            class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 disabled:opacity-50 disabled:cursor-not-allowed mb-6">
+        Add User Role
+    </button>
+
+    <!-- User Roles Table -->
+    <div>
+        <h2 class="text-2xl font-semibold mb-4 text-gray-700">User Roles</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">User</th>
+                        <th class="py-2 px-4 border-b border-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Role</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: dataModel.userRoles" class="text-gray-700">
+                    <tr>
+                        <td class="py-2 px-4 border-b border-gray-200" data-bind="text: user.name"></td>
+                        <td class="py-2 px-4 border-b border-gray-200" data-bind="text: role.name"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="/js/knockout-3.5.1.js"></script>
+    <script src="/js/main.js"></script>
+</div>
